@@ -11,19 +11,10 @@ type Actor = {
   velocity: Vector;
 };
 
-const canvas = document.querySelector<HTMLCanvasElement>("#game");
-const scoreElement = document.querySelector<HTMLElement>("#score");
-const statusElement = document.querySelector<HTMLElement>("#status");
-
-if (!canvas || !scoreElement || !statusElement) {
-  throw new Error("Missing game markup");
-}
-
-const context = canvas.getContext("2d");
-
-if (!context) {
-  throw new Error("Canvas 2D rendering is not available");
-}
+const canvas = getRequiredElement<HTMLCanvasElement>("#game");
+const scoreElement = getRequiredElement<HTMLElement>("#score");
+const statusElement = getRequiredElement<HTMLElement>("#status");
+const context = getRequiredContext(canvas);
 
 const keys = new Set<string>();
 const player: Actor = {
@@ -201,6 +192,26 @@ function clamp(value: number, min: number, max: number): number {
 
 function randomBetween(min: number, max: number): number {
   return Math.random() * (max - min) + min;
+}
+
+function getRequiredElement<TElement extends Element>(selector: string): TElement {
+  const element = document.querySelector<TElement>(selector);
+
+  if (!element) {
+    throw new Error(`Missing required element: ${selector}`);
+  }
+
+  return element;
+}
+
+function getRequiredContext(targetCanvas: HTMLCanvasElement): CanvasRenderingContext2D {
+  const renderingContext = targetCanvas.getContext("2d");
+
+  if (!renderingContext) {
+    throw new Error("Canvas 2D rendering is not available");
+  }
+
+  return renderingContext;
 }
 
 function gameLoop(currentTime: number): void {
