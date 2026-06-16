@@ -37,6 +37,19 @@ jobs:
           tmpdir="$(mktemp -d)"
           mkdir -p "$tmpdir/Gantos"
           cp -R Gantos/dist/. "$tmpdir/Gantos/"
+          printf "%s\n" \
+            "<!doctype html>" \
+            "<html lang=\"en\">" \
+            "<head>" \
+            "  <meta charset=\"UTF-8\" />" \
+            "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />" \
+            "  <meta http-equiv=\"refresh\" content=\"0; url=Gantos/\" />" \
+            "  <title>Gantos</title>" \
+            "</head>" \
+            "<body>" \
+            "  <a href=\"Gantos/\">Open Gantos</a>" \
+            "</body>" \
+            "</html>" > "$tmpdir/index.html"
           git switch --orphan gh-pages
           find . -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
           cp -R "$tmpdir/." .
