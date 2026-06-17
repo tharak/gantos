@@ -51,4 +51,4 @@ Before the first deployment, open the repository on GitHub and go to:
 
 After the workflow finishes, the game will be available at:
 
-`https://<your-github-username>.github.io/gantos/Gantos/`
+`https://<your-github-username>.github.io/gantos/`
